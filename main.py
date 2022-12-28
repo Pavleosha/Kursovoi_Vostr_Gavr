@@ -3,9 +3,13 @@ import managers.managers as managers
 import numpy as np
 
 # Параметры решателя
-x0 = 2
-y0 = 2
-r = 1
+x0 = 1
+y0 = 1
+r0 = 0.2
+r1 = 0.4
+r2 = 0.6
+r3 = 0.8
+r4 = 1
 n = 5
 h_parts = 1
 
@@ -27,7 +31,7 @@ c = np.array([0, 0, 1/2])  #левый столбец
 
 
 # Создаём материальное тело и двигаем его
-body = managers.cr_mat_body(x0, y0, r, n)
+body = managers.cr_mat_body(x0, y0, r0, r1, r2, r3, r4, n)
 move = managers.move_mat_body(time, h, body, a, b, c)
 
 # Рисуем траекторию движения тела

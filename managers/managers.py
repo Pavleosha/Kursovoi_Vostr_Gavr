@@ -1,6 +1,5 @@
 # Импорт модуля (модели) и библиотек.
 import models as model
-import math as math
 import matplotlib.pyplot as plotlib
 import numpy as np
 
@@ -15,7 +14,7 @@ def fy(t, y):
 
 
 # Создаем материальное тело
-def cr_mat_body(x0, y0, r, n):
+def cr_mat_body(x0, y0, r0, r1, r2, r3, r4, n):
     t = 0
     m = 0
     mat_points = []
@@ -26,14 +25,22 @@ def cr_mat_body(x0, y0, r, n):
     def get_crd(r):
         return x0 + r * np.cos(theta), y0 + r * np.sin(theta)
 
-    xr, yr = get_crd(r)
+    xr0, yr0 = get_crd(r0)
+    xr1, yr1 = get_crd(r1)
+    xr2, yr2 = get_crd(r2)
+    xr3, yr3 = get_crd(r3)
+    xr4, yr4 = get_crd(r4)
 
     # Добавляем материальноые точки
     def add_mpoints(x, y):
         mat_points.append(model.MatPoint(m, x, y, fx(t, x), fy(t, y), x, y, t))
 
-    for i in range(len(xr)):        # range - переход на следующую итерацию цикла до точки (xr,yr)
-        add_mpoints(xr[i], yr[i])
+    for i in range(len(xr4)):        # range - переход на следующую итерацию цикла до точки (xr,yr)
+        add_mpoints(xr0[i], yr0[i])
+        add_mpoints(xr1[i], yr1[i])
+        add_mpoints(xr2[i], yr2[i])
+        add_mpoints(xr3[i], yr3[i])
+        add_mpoints(xr4[i], yr4[i])
 
     mat_body = model.MatBody(mat_points)
     return mat_body
@@ -90,8 +97,6 @@ def move_through_space(time, h):
     x_s, y_s = np.meshgrid(a, a)
     velocity_fields = []
 
-    xs, ys = np.meshgrid(a, a)
-    vel_fields = []
 
     for n in range(int(time / h)):
         space_points = []
@@ -139,6 +144,3 @@ def plot_vel_fields(vf):
         t += h
         #plotlib.show()
         plotlib.savefig('plots/velocity_fields' + str(n) + '.svg', format='svg', dpi=1200)
-
-
-
