@@ -78,7 +78,7 @@ def plot_trajectory(mb, tr):
     plotlib.axis('equal')
     plotlib.grid()
     plotlib.show()
-    plotlib.savefig('assets/plot_trajectory.svg', format='svg', dpi=1200)
+    plotlib.savefig('plots/plot_trajectory.svg', format='svg', dpi=1200)
 
 
 def move_through_space(time, h):
@@ -131,7 +131,7 @@ def plot_vel_fields(vf):
                 plotlib.plot(x, y)
         t += h
         plotlib.show()
-        plotlib.savefig('assets/velocity_fields' + str(n) + '.svg', format='svg', dpi=1200)
+        plotlib.savefig('plots/velocity_fields' + str(n) + '.svg', format='svg', dpi=1200)
 
 
 
