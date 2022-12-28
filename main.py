@@ -3,13 +3,18 @@ import managers.managers as managers
 import numpy as np
 
 # Параметры решателя
-x0 = 5
-y0 = 1
+x0 = 2
+y0 = 2
 r = 1
-n = 10
+n = 5
 h_parts = 1
+
 time = 1
 h = 0.01
+
+#time = 0.5
+#h = 0.1
+
 
 # Преобразованная таблица Бутчера
 a = np.array([
