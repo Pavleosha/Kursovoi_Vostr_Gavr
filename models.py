@@ -1,6 +1,6 @@
-class MaterialPoint:
+class MaterialPoint:    # Определение мат точки
     def __init__(self, i, crd_x, crd_y, vel_x, vel_y, x0, y0, t):
-        self.i = i
+        self.i = i              # При определении каждого класса зададим его свойства
         self.crd_x = crd_x
         self.crd_y = crd_y
         self.vel_x = vel_x
@@ -10,25 +10,25 @@ class MaterialPoint:
         self.t = t
 
 
-class MaterialBody:
+class MaterialBody:     # Определение мат тела
     def __init__(self, material_points):
         self.material_points = material_points
 
 
-class PointTrajectory:
+class PointTrajectory:  #Определение траектории точки
     def __init__(self, material_point, x, y):
         self.material_point = material_point
         self.x = x
         self.y = y
 
 
-class BodyTrajectory:
+class BodyTrajectory:   # Определение траектории тела
     def __init__(self, point_trajectories, material_body):
         self.point_trajectories = point_trajectories
         self.material_body = material_body
 
 
-class SpacePoint:
+class SpacePoint:       # Определение точки пространства
     def __init__(self, i, crd_x, crd_y, vel_x, vel_y, t):
         self.i = i
         self.crd_x = crd_x
@@ -38,6 +38,6 @@ class SpacePoint:
         self.t = t
 
 
-class SpaceGrid:
+class SpaceGrid:        # Определение сетки
     def __init__(self, space_points):
         self.space_points = space_points
