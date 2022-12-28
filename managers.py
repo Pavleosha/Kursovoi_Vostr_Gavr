@@ -31,7 +31,7 @@ def cr_mat_body(x0, y0, r, n):
     def add_mpoints(x, y):
         mat_points.append(model.MatPoint(m, x, y, fx(t, x), fy(t, y), x, y, t))
 
-    for i in range(len(xr)): # range - переход на следующую итерацию цикла до точки (xr,yr)
+    for i in range(len(xr)):        # range - переход на следующую итерацию цикла до точки (xr,yr)
         add_mpoints(xr[i], yr[i])
 
     mat_body = model.MatBody(mat_points)
@@ -64,5 +64,20 @@ def move_mat_body(time, h, mb, a, b, c):
         point_trajectories.append(model.PointTrajectory(mb.mat_points[i], xt, yt))
     body_trajectory = model.BodyTrajectory(point_trajectories, mb)
     return body_trajectory
+
+
+# Строим график траектории движения тела
+def plot_trajectory(mb, tr):
+    for i in range(len(mb.mat_points)):
+        plotlib.plot(mb.mat_points[i].coord_x, mb.mat_points[i].coord_y, 'r.')
+    for i in range(len(mb.mat_points)):
+        plotlib.plot(tr.point_trajectories[i].x, tr.point_trajectories[i].y, 'b', linewidth=0.5)
+    for i in range(len(mb.mat_points)):
+        time = len(tr.point_trajectories[i].x) - 1
+        plotlib.plot(tr.point_trajectories[i].x[time], tr.point_trajectories[i].y[time], 'g.')
+    plotlib.axis('equal')
+    plotlib.grid()
+    plotlib.show()
+    plotlib.savefig('assets/plot_trajectory.svg', format='svg', dpi=1200)
 
 
