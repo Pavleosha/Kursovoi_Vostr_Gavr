@@ -85,13 +85,14 @@ def move_through_space(time, h):
     t = h
     m = 0
     a = np.linspace(-3, 3, 7)
-    mg = np.meshgrid(a, a)
+    x_s, y_s = np.meshgrid(a, a)
     vel_fields = []
     for n in range(int(time / h)):
         space_points = []
         for i in range(7):
             for j in range(7):
-                x, y = mg[i, j]
+                x = x_s[i, j]
+                y = y_s[i, j]
                 space_points.append(model.SpacePoint(m, x, y, fx(t, x), fy(t, y), t))
                 m += 1
         vel_fields.append(model.SpaceGrid(space_points))
