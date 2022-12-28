@@ -86,14 +86,14 @@ def move_through_space(time, h):
     t = h
     m = 0
     a = np.linspace(-3, 3, 7)
-    x_s, y_s = np.meshgrid(a, a)
+    xs, ys = np.meshgrid(a, a)
     vel_fields = []
     for n in range(int(time / h)):
         space_points = []
         for i in range(7):
             for j in range(7):
-                x = x_s[i, j]
-                y = y_s[i, j]
+                x = xs[i, j]
+                y = ys[i, j]
                 space_points.append(model.SpacePoint(m, x, y, fx(t, x), fy(t, y), t))
                 m += 1
         vel_fields.append(model.SpaceGrid(space_points))
@@ -113,8 +113,8 @@ def plot_vel_fields(vf):
         crd_y = []
         vel_x = []
         vel_y = []
-        for i in range(11):   # графики полей скоростей
-            for j in range(11):
+        for i in range(7):   # графики полей скоростей
+            for j in range(7):
                 crd_x.append(vf[n].space_points[m].crd_x)
                 crd_y.append(vf[n].space_points[m].crd_y)
                 vel_x.append(vf[n].space_points[m].vel_x)
