@@ -99,3 +99,39 @@ def move_through_space(time, h):
     return vel_fields
 
 
+# Строим графики полей скоростей и линий тока
+def plot_vel_fields(vf):
+    h = vf[0].space_points[0].t
+    t = h
+    for n in range(len(vf)):
+        plotlib.figure(n)
+        plotlib.suptitle('t = ' + str(t))
+        m = 0
+        crd_x = []
+        crd_y = []
+        vel_x = []
+        vel_y = []
+        for i in range(11):   # графики полей скоростей
+            for j in range(11):
+                crd_x.append(vf[n].space_points[m].crd_x)
+                crd_y.append(vf[n].space_points[m].crd_y)
+                vel_x.append(vf[n].space_points[m].vel_x)
+                vel_y.append(vf[n].space_points[m].vel_y)
+                m += 1
+        plotlib.subplot(1, 2, 1)
+        plotlib.quiver(crd_x, crd_y, vel_x, vel_y)
+        for p in range(1, 3):   # графики линий тока
+            for q in range(1, 3):
+                x = np.linspace(0.1, 5.0, 100)
+                d = fy(t, 1) / fx(t, 1)
+                c = q * (p ** d)
+                y = c * (-x ** d)
+                plotlib.subplot(1, 2, 2)
+                plotlib.axis([-1, 3, -3, 1])
+                plotlib.plot(x, y)
+        t += h
+        plotlib.show()
+        plotlib.savefig('assets/velocity_fields' + str(n) + '.svg', format='svg', dpi=1200)
+
+
+
