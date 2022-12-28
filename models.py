@@ -22,8 +22,6 @@ class MaterialBody:
 #Определение траектории точки
 class PointTrajectory:
 
-class PointTrajectory:  # Определение траектории точки
-
     def __init__(self, material_point, x, y):
         self.material_point = material_point
         self.x = x
