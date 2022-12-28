@@ -1,4 +1,4 @@
-# Импорт модуля (модели) и библиотек
+# Импорт модуля (модели) и библиотек.
 import models.models as model
 import matplotlib.pyplot as plotlib
 import numpy as np
