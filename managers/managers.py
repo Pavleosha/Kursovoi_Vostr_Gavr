@@ -1,16 +1,17 @@
 # Импорт модуля (модели) и библиотек.
-import models.models as model
+import models as model
+import math as math
 import matplotlib.pyplot as plotlib
 import numpy as np
 
 
 # Задаём V1 и V2
 def fx(t, x):
-    return - np.exp(t) * x
+    return -math.exp(t) * x
 
 
 def fy(t, y):
-    return np.exp(t) * y
+    return math.exp(t) * y
 
 
 # Создаем материальное тело
@@ -77,7 +78,7 @@ def plot_trajectory(mb, tr):
         plotlib.plot(tr.point_trajectories[i].x[time], tr.point_trajectories[i].y[time], 'g.')
     plotlib.axis('equal')
     plotlib.grid()
-    plotlib.show()
+    #plotlib.show()
     plotlib.savefig('plots/plot_trajectory.svg', format='svg', dpi=1200)
 
 
@@ -131,7 +132,7 @@ def plot_vel_fields(vf):
                 plotlib.axis([-1, 3, -3, 1])
                 plotlib.plot(x, y)
         t += h
-        plotlib.show()
+        #plotlib.show()
         plotlib.savefig('plots/velocity_fields' + str(n) + '.svg', format='svg', dpi=1200)
 
 
