@@ -3,20 +3,21 @@ import models.models as model
 import matplotlib.pyplot as plotlib
 import numpy as np
 
+
 # Задаём V1 и V2
-def f_x(t, x):
+def fx(t, x):
     return - np.exp(t) * x
 
 
-def f_y(t, y):
+def fy(t, y):
     return np.exp(t) * y
 
 
 # Создаем материальное тело
-def cr_material_body(x0, y0, r, n):
+def cr_mat_body(x0, y0, r, n):
     t = 0
     m = 0
-    material_points = []
+    mat_points = []
 
     # Переходим в полярные координаты
     theta = np.linspace(0, np.pi / 2, n)
@@ -28,18 +29,19 @@ def cr_material_body(x0, y0, r, n):
 
     # Добавляем материальноые точки
     def add_mpoints(x, y):
-        material_points.append(model.MaterialPoint(m, x, y, f_x(t, x), f_y(t, y), x, y, t))
+        mat_points.append(model.MatPoint(m, x, y, fx(t, x), fy(t, y), x, y, t))
 
     for i in range(len(xr)): # range - переход на следующую итерацию цикла до точки (xr,yr)
         add_mpoints(xr[i], yr[i])
 
-    material_body = model.MaterialBody(material_points)
-    return material_body
+    mat_body = model.MatBody(mat_points)
+    return mat_body
+
 
 # Вводим метод Рунге-Кутты (явный)
 def runge_method(x0, h, n, func, a, b, c):    # h-величина шага сетки, a,b,c - эл-ты таблицы Бутчера
     xt = [x0]
-    t = 0
+    t = 0       # Сумма шагов интегрирования за все итерации
     for i in range(n):
         xn = xt[i]
         k1 = func(t, xn)    # 1я стадия
@@ -47,3 +49,20 @@ def runge_method(x0, h, n, func, a, b, c):    # h-величина шага се
         xt.append(xn + h * (k1 * b[1] + k2 * b[2]))     # по общей формуле
         t += h
     return xt
+
+
+# Действуем на тело
+def move_mat_body(time, h, mb, a, b, c):
+    point_trajectories = []
+    for i in range(len(mb.mat_points)):
+        x0 = mb.mat_points[i].x0        # Обращение к координате х0 i-той мат. точки матераиоьного тела
+        y0 = mb.mat_points[i].y0
+        n = int(time / h) + 1
+        xt = runge_method(x0, h, n, fx, a, b, c)
+        yt = runge_method(y0, h, n, fy, a, b, c)
+
+        point_trajectories.append(model.PointTrajectory(mb.mat_points[i], xt, yt))
+    body_trajectory = model.BodyTrajectory(point_trajectories, mb)
+    return body_trajectory
+
+
