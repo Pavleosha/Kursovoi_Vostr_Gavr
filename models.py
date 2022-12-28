@@ -4,10 +4,11 @@ class MaterialPoint:
         self.crd_x = crd_x
         self.crd_y = crd_y
         self.vel_x = vel_x
-        self.vel_y - vel_y
+        self.vel_y = vel_y
         self.x0 = x0
         self.y0 = y0
         self.t = t
+
 
 class MaterialBody:
     def __init__(self, material_points):
@@ -19,3 +20,12 @@ class PointTrajectory:
         self.material_point = material_point
         self.x = x
         self.y = y
+
+
+class BodyTrajectory:
+    def __init__(self, point_trajectories, material_body):
+        self.point_trajectories = point_trajectories
+        self.material_body = material_body
+
+class SpacePoint:
+    def __init__(self, i ):
