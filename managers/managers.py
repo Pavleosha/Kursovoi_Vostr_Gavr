@@ -1,16 +1,17 @@
 # Импорт модуля (модели) и библиотек.
-import models.models as model
+import models as model
+import math as math
 import matplotlib.pyplot as plotlib
 import numpy as np
 
 
 # Задаём V1 и V2
 def fx(t, x):
-    return - np.exp(t) * x
+    return -math.exp(t) * x
 
 
 def fy(t, y):
-    return np.exp(t) * y
+    return math.exp(t) * y
 
 
 # Создаем материальное тело
@@ -77,7 +78,7 @@ def plot_trajectory(mb, tr):
         plotlib.plot(tr.point_trajectories[i].x[time], tr.point_trajectories[i].y[time], 'g.')
     plotlib.axis('equal')
     plotlib.grid()
-    plotlib.show()
+    #plotlib.show()
     plotlib.savefig('plots/plot_trajectory.svg', format='svg', dpi=1200)
 
 
@@ -85,13 +86,15 @@ def move_through_space(time, h):
     t = h
     m = 0
     a = np.linspace(-3, 3, 7)
-    mg = np.meshgrid(a, a)
+    xs = np.meshgrid(a, a)
+    ys = np.meshgrid(a, a)
     vel_fields = []
     for n in range(int(time / h)):
         space_points = []
         for i in range(7):
             for j in range(7):
-                x, y = mg[i, j]
+                x = xs[i, j]
+                y = ys[i, j]
                 space_points.append(model.SpacePoint(m, x, y, fx(t, x), fy(t, y), t))
                 m += 1
         vel_fields.append(model.SpaceGrid(space_points))
@@ -130,7 +133,7 @@ def plot_vel_fields(vf):
                 plotlib.axis([-1, 3, -3, 1])
                 plotlib.plot(x, y)
         t += h
-        plotlib.show()
+        #plotlib.show()
         plotlib.savefig('plots/velocity_fields' + str(n) + '.svg', format='svg', dpi=1200)
 
 
