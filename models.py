@@ -18,8 +18,7 @@ class MatBody:
         self.mat_points = mat_points
 
 
-
-#Определение траектории точки
+# Определение траектории точки
 class PointTrajectory:
 
     def __init__(self, mat_point, x, y):

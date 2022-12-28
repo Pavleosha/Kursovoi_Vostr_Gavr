@@ -2,7 +2,7 @@
 import managers.managers as managers
 import numpy as np
 
-# Параметры решателя
+# Начальные параметры
 x0 = 1
 y0 = 1
 r0 = 0.2

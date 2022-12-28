@@ -1,31 +1,30 @@
-# Импорт модуля (модели) и библиотек.
-import models as model
-import matplotlib.pyplot as plotlib
-import numpy as np
+import models as model      # Подключаем моудль "модели"
+import matplotlib.pyplot as plotlib     # подключаем библиотеку для создания графиков
+import numpy as np      # подключаем библиотеку для работы с математическими функциями
 
 
-# Задаём V1 и V2
-def fx(t, x):
+# Задаём функции V1 и V2
+def fx(t, x):       # Функция V1
     return -np.exp(t) * x
 
 
-def fy(t, y):
+def fy(t, y):       # Функция V2
     return np.exp(t) * y
 
 
-# Создаем материальное тело
+# Создаем материальное тело (первая четверть круга)
 def cr_mat_body(x0, y0, r0, r1, r2, r3, r4, n):
     t = 0
     m = 0
     mat_points = []
 
-    # Переходим в полярные координаты
-    theta = np.linspace(0, np.pi / 2, n)
+    # Перейдем в полярные координаты
+    phi = np.linspace(0, np.pi/2, n)      # Угол поворота
 
     def get_crd(r):
-        return x0 + r * np.cos(theta), y0 + r * np.sin(theta)
+        return x0 + r * np.cos(phi), y0 + r * np.sin(phi)       # Непосредсвтенный переход
 
-    xr0, yr0 = get_crd(r0)
+    xr0, yr0 = get_crd(r0)      # Создаем четверть круга
     xr1, yr1 = get_crd(r1)
     xr2, yr2 = get_crd(r2)
     xr3, yr3 = get_crd(r3)
@@ -46,7 +45,7 @@ def cr_mat_body(x0, y0, r0, r1, r2, r3, r4, n):
     return mat_body
 
 
-# Вводим метод Рунге-Кутты (явный)
+# Вводим явный метод Рунге-Кутты
 def runge_method(x0, h, n, func, a, b, c):    # h-величина шага сетки, a,b,c - эл-ты таблицы Бутчера
     xt = [x0]
     t = 0       # Сумма шагов интегрирования за все итерации
@@ -66,7 +65,7 @@ def move_mat_body(time, h, mb, a, b, c):
         x0 = mb.mat_points[i].x0        # Обращение к координате х0 i-той мат. точки матераиоьного тела
         y0 = mb.mat_points[i].y0
         n = int(time / h) + 1
-        xt = runge_method(x0, h, n, fx, a, b, c)
+        xt = runge_method(x0, h, n, fx, a, b, c)        # Обращаемся к методу Рунге-Кутты
         yt = runge_method(y0, h, n, fy, a, b, c)
 
         point_trajectories.append(model.PointTrajectory(mb.mat_points[i], xt, yt))
@@ -85,8 +84,8 @@ def plot_trajectory(mb, tr):
         plotlib.plot(tr.point_trajectories[i].x[time], tr.point_trajectories[i].y[time], 'g.')
     plotlib.axis('equal')
     plotlib.grid()
-    #plotlib.show()
-    plotlib.savefig('plots/plot_trajectory.svg', format='svg', dpi=1200)
+    # plotlib.show()
+    plotlib.savefig('plots/plot_trajectory.png', format='png', dpi=1200)
 
 
 def move_through_space(time, h):
@@ -97,8 +96,7 @@ def move_through_space(time, h):
     x_s, y_s = np.meshgrid(a, a)
     velocity_fields = []
 
-
-    for n in range(int(time / h)):
+    for n in range(int(time/h)):
         space_points = []
         for i in range(7):
             for j in range(7):
@@ -142,5 +140,5 @@ def plot_vel_fields(vf):
                 plotlib.axis([-1, 3, -3, 1])
                 plotlib.plot(x, y)
         t += h
-        #plotlib.show()
-        plotlib.savefig('plots/velocity_fields' + str(n) + '.svg', format='svg', dpi=1200)
+        # plotlib.show()
+        plotlib.savefig('plots/velocity_fields' + str(n) + '.png', format='png', dpi=1200)
