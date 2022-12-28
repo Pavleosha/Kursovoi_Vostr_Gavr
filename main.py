@@ -4,7 +4,7 @@ import numpy as np
 
 # Параметры решателя
 x0 = 5
-y0 = -10
+y0 = 1
 r = 1
 n = 10
 h_parts = 1
