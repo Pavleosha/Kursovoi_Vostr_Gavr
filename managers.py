@@ -69,7 +69,7 @@ def move_mat_body(time, h, mb, a, b, c):
 # Строим график траектории движения тела
 def plot_trajectory(mb, tr):
     for i in range(len(mb.mat_points)):
-        plotlib.plot(mb.mat_points[i].coord_x, mb.mat_points[i].coord_y, 'r.')
+        plotlib.plot(mb.mat_points[i].crd_x, mb.mat_points[i].crd_y, 'r.')
     for i in range(len(mb.mat_points)):
         plotlib.plot(tr.point_trajectories[i].x, tr.point_trajectories[i].y, 'b', linewidth=0.5)
     for i in range(len(mb.mat_points)):
@@ -79,5 +79,23 @@ def plot_trajectory(mb, tr):
     plotlib.grid()
     plotlib.show()
     plotlib.savefig('assets/plot_trajectory.svg', format='svg', dpi=1200)
+
+
+def move_through_space(time, h):
+    t = h
+    m = 0
+    a = np.linspace(-3, 3, 7)
+    mg = np.meshgrid(a, a)
+    vel_fields = []
+    for n in range(int(time / h)):
+        space_points = []
+        for i in range(7):
+            for j in range(7):
+                x, y = mg[i, j]
+                space_points.append(model.SpacePoint(m, x, y, fx(t, x), fy(t, y), t))
+                m += 1
+        vel_fields.append(model.SpaceGrid(space_points))
+        t += h
+    return vel_fields
 
 
