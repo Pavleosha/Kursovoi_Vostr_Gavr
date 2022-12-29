@@ -3,14 +3,14 @@ import managers.managers as managers
 import numpy as np
 
 # Начальные параметры
-x0 = 1
-y0 = 1
+x0 = 7
+y0 = 5
 r0 = 0.2
 r1 = 0.4
 r2 = 0.6
 r3 = 0.8
 r4 = 1
-n = 5
+n = 20
 h_parts = 1
 
 time = 1

@@ -19,7 +19,7 @@ def cr_mat_body(x0, y0, r0, r1, r2, r3, r4, n):
     mat_points = []
 
     # Перейдем в полярные координаты
-    phi = np.linspace(0, np.pi/2, n)      # Угол поворота
+    phi = np.linspace(0, 2*np.pi, n)      # Угол поворота
 
     def get_crd(r):
         return x0 + r * np.cos(phi), y0 + r * np.sin(phi)       # Непосредсвтенный переход
