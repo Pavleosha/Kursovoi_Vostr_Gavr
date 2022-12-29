@@ -1,8 +1,8 @@
 # Определение мат точки
 class MatPoint:
     # При определении каждого класса зададим его свойства
-    def __init__(self, i, crd_x, crd_y, vel_x, vel_y, x0, y0, t):
-        self.i = i
+    def __init__(self, crd_x, crd_y, vel_x, vel_y, x0, y0, t):
+       # self.i = i
         self.crd_x = crd_x
         self.crd_y = crd_y
         self.vel_x = vel_x
@@ -36,8 +36,7 @@ class BodyTrajectory:
 
 # Определение точки пространства
 class SpacePoint:
-    def __init__(self, i, crd_x, crd_y, vel_x, vel_y, t):
-        self.i = i
+    def __init__(self, crd_x, crd_y, vel_x, vel_y, t):
         self.crd_x = crd_x
         self.crd_y = crd_y
         self.vel_x = vel_x

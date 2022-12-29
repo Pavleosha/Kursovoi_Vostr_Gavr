@@ -3,8 +3,8 @@ import managers.managers as managers
 import numpy as np
 
 # Начальные параметры
-x0 = 2
-y0 = 2
+x0 = 4
+y0 = 4
 r0 = 0.2
 r1 = 0.4
 r2 = 0.6
@@ -34,5 +34,5 @@ move = managers.move_mat_body(time, h, body, a, b, c)
 managers.plot_trajectory(body, move)
 
 # Составляем поля скоростей и выводим графики
-vf = managers.move_through_space(0.5, 0.05)
+vf = managers.move_through_space(0.5, 0.1)
 managers.plot_vel_fields(vf)
