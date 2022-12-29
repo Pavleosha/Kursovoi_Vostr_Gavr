@@ -3,8 +3,8 @@ import managers.managers as managers
 import numpy as np
 
 # Начальные параметры
-x0 = 7
-y0 = 5
+x0 = 2
+y0 = 2
 r0 = 0.2
 r1 = 0.4
 r2 = 0.6
