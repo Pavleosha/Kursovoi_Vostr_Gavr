@@ -34,5 +34,5 @@ move = managers.move_mat_body(time, h, body, a, b, c)
 managers.plot_trajectory(body, move)
 
 # Составляем поля скоростей и выводим графики
-vf = managers.move_through_space(0.5, 0.1)
+vf = managers.move_through_space(0.5, 0.05)
 managers.plot_vel_fields(vf)

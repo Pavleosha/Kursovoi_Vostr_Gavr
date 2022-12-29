@@ -95,7 +95,6 @@ def plot_trajectory(mb, tr):
 
 def move_through_space(time, h):
     t = 0
-
     a = np.linspace(-3, 3, 7)
 
     x_s, y_s = np.meshgrid(a, a)
