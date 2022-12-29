@@ -35,6 +35,7 @@ def cr_mat_body(x0, y0, r0, r1, r2, r3, r4, n):
         mat_points.append(model.MatPoint(m, x, y, fx(t, x), fy(t, y), x, y, t))
 
     for i in range(len(xr4)):        # range - переход на следующую итерацию цикла до точки (xr,yr)
+        add_mpoints(x0, y0)
         add_mpoints(xr0[i], yr0[i])
         add_mpoints(xr1[i], yr1[i])
         add_mpoints(xr2[i], yr2[i])
