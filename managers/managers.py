@@ -12,19 +12,19 @@ def fy(t, y):       # Функция V2
     return np.exp(t) * y
 
 
-# Создаем материальное тело (первая четверть круга)
+# Создаем материальное тело (круг)
 def cr_mat_body(x0, y0, r0, r1, r2, r3, r4, n):
-    t = 0
-    m = 0
-    mat_points = []
+    t = 0       # initial time of mpoints
+    m = 0       # initial position of mpoints
+    mat_points = []     # create empty array of mpoints
 
     # Перейдем в полярные координаты
-    phi = np.linspace(0, 2*np.pi, n)      # Угол поворота
+    phi = np.linspace(0, 2*np.pi, n)      # unit angle of rotation
 
     def get_crd(r):
         return x0 + r * np.cos(phi), y0 + r * np.sin(phi)       # Непосредсвтенный переход
 
-    xr0, yr0 = get_crd(r0)      # Создаем четверть круга
+    xr0, yr0 = get_crd(r0)      # create arc of circle
     xr1, yr1 = get_crd(r1)
     xr2, yr2 = get_crd(r2)
     xr3, yr3 = get_crd(r3)
@@ -32,9 +32,11 @@ def cr_mat_body(x0, y0, r0, r1, r2, r3, r4, n):
 
     # Добавляем материальноые точки
     def add_mpoints(x, y):
+        # defining the array class
         mat_points.append(model.MatPoint(m, x, y, fx(t, x), fy(t, y), x, y, t))
 
-    for i in range(len(xr4)):        # range - переход на следующую итерацию цикла до точки (xr,yr)
+    for i in range(len(xr4)):
+        # filling the array with mpoints
         add_mpoints(x0, y0)
         add_mpoints(xr0[i], yr0[i])
         add_mpoints(xr1[i], yr1[i])
@@ -42,26 +44,26 @@ def cr_mat_body(x0, y0, r0, r1, r2, r3, r4, n):
         add_mpoints(xr3[i], yr3[i])
         add_mpoints(xr4[i], yr4[i])
 
-    mat_body = model.MatBody(mat_points)
+    mat_body = model.MatBody(mat_points)        # we combine the points into a body
     return mat_body
 
 
-# Вводим явный метод Рунге-Кутты
-def runge_method(x0, h, n, func, a, b, c):    # h-величина шага сетки, a,b,c - эл-ты таблицы Бутчера
+# We introduce the explicit Runge-Kutta method
+def runge_method(x0, h, n, func, a, b, c):    # h - integration step, a,b,c - elements Butcher's table
     xt = [x0]
-    t = 0       # Сумма шагов интегрирования за все итерации
+    t = 0       # sum of iteration steps
     for i in range(n):
         xn = xt[i]
-        k1 = func(t, xn)    # 1я стадия
-        k2 = func(t + c[2] * h, xn + a[2, 1] * h * k1)  # 2я стадия
-        xt.append(xn + h * (k1 * b[1] + k2 * b[2]))     # по общей формуле
+        k1 = func(t, xn)    # 1st stage
+        k2 = func(t + c[2] * h, xn + a[2, 1] * h * k1)  # 2nd stage
+        xt.append(xn + h * (k1 * b[1] + k2 * b[2]))     # general formula
         t += h
     return xt
 
 
 # Действуем на тело
 def move_mat_body(time, h, mb, a, b, c):
-    point_trajectories = []
+    point_trajectories = []     # create empty array
     for i in range(len(mb.mat_points)):
         x0 = mb.mat_points[i].x0        # Обращение к координате х0 i-той мат. точки матераиоьного тела
         y0 = mb.mat_points[i].y0
@@ -69,6 +71,7 @@ def move_mat_body(time, h, mb, a, b, c):
         xt = runge_method(x0, h, n, fx, a, b, c)        # Обращаемся к методу Рунге-Кутты
         yt = runge_method(y0, h, n, fy, a, b, c)
 
+        # filling the array
         point_trajectories.append(model.PointTrajectory(mb.mat_points[i], xt, yt))
     body_trajectory = model.BodyTrajectory(point_trajectories, mb)
     return body_trajectory
@@ -77,16 +80,18 @@ def move_mat_body(time, h, mb, a, b, c):
 # Строим график траектории движения тела
 def plot_trajectory(mb, tr):
     for i in range(len(mb.mat_points)):
-        plotlib.plot(mb.mat_points[i].crd_x, mb.mat_points[i].crd_y, 'r.')
+        plotlib.plot(mb.mat_points[i].crd_x, mb.mat_points[i].crd_y, 'r.')      # make initial circle witch red dots
     for i in range(len(mb.mat_points)):
+        # make blue trajectory line with specific length
         plotlib.plot(tr.point_trajectories[i].x, tr.point_trajectories[i].y, 'b', linewidth=0.5)
     for i in range(len(mb.mat_points)):
+        # at the ends of the lines we build the green dots of the final figure
         time = len(tr.point_trajectories[i].x) - 1
         plotlib.plot(tr.point_trajectories[i].x[time], tr.point_trajectories[i].y[time], 'g.')
-    plotlib.axis('equal')
-    plotlib.grid()
+    plotlib.axis('equal')   # make axis
+    plotlib.grid()      # make grid
     # plotlib.show()
-    plotlib.savefig('plots/plot_trajectory.png', format='png', dpi=1200)
+    plotlib.savefig('plots/plot_trajectory.png', format='png', dpi=1200)        # saving our plots
 
 
 def move_through_space(time, h):
